@@ -12,7 +12,7 @@ sys.setrecursionlimit(20000)
 
 def buat_kamar():
     kamar = []
-    for i in range(1, 101):
+    for i in range(1, 10000):
         status = "Kosong" if random.choice([True, False]) else "Terisi"
         kamar.append({
             "nomor_kamar": i,
@@ -26,9 +26,8 @@ def buat_kamar():
 def buat_penghuni():
     return []
 
+
 # Algoritma iteratif untuk mencari kamar kosong
-
-
 def cari_kamar_kosong_iteratif(kamar):
     return [k for k in kamar if k['status'] == "Kosong"]
 
@@ -70,13 +69,17 @@ def cari_kamar_iteratif():
 
 
 def analisis_efisiensi():
-    ukuran_data = [10, 50, 100, 500, 1000, 5000, 10000]
+    # Buat data kamar utama
+    kamar = buat_kamar()
+
+    # Subset dari panjang array kamar
+    ukuran_data = [10, 50, 100, 500, 1000, len(kamar)]
     waktu_iteratif = []
     waktu_rekursif = []
 
     for ukuran in ukuran_data:
-        data_dummy = [{"status": "Kosong" if i %
-                       2 == 0 else "Terisi"} for i in range(ukuran)]
+        # Ambil subset data dari array kamar
+        data_dummy = kamar[:ukuran]
 
         # Analisis waktu iteratif
         mulai = time.time()
@@ -98,6 +101,7 @@ def analisis_efisiensi():
     plt.legend()
     plt.grid()
     plt.show()
+
 
 # Fungsi untuk menampilkan tabel kamar kosong
 
