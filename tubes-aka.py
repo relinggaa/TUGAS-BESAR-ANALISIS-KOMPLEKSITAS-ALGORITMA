@@ -7,12 +7,12 @@ import sys
 import random
 
 # Tingkatkan batas kedalaman rekursi
-sys.setrecursionlimit(20000)
+sys.setrecursionlimit(2000)
 
 
 def buat_kamar():
     kamar = []
-    for i in range(1, 10000):
+    for i in range(1, 1000):
         status = "Kosong" if random.choice([True, False]) else "Terisi"
         kamar.append({
             "nomor_kamar": i,
@@ -67,44 +67,46 @@ def cari_kamar_iteratif():
 
 # Fungsi untuk analisis efisiensi algoritma
 
+# Fungsi untuk analisis efisiensi algoritma
+
 
 def analisis_efisiensi():
-    # Buat data kamar utama
-    kamar = buat_kamar()
 
-    # Subset dari panjang array kamar
-    ukuran_data = [10, 50, 100, 500, 1000, len(kamar)]
+    kamar_analisis = buat_kamar()
+
+    ukuran_data = [10, 50, 100, 500, 1000, 2000, 5000]
     waktu_iteratif = []
     waktu_rekursif = []
 
     for ukuran in ukuran_data:
-        # Ambil subset data dari array kamar
-        data_dummy = kamar[:ukuran]
+
+        data_dummy = kamar_analisis[:ukuran]
 
         # Analisis waktu iteratif
-        mulai = time.time()
+        mulai_iteratif = time.perf_counter()
         cari_kamar_kosong_iteratif(data_dummy)
-        waktu_iteratif.append(time.time() - mulai)
+        waktu_iteratif.append(time.perf_counter() - mulai_iteratif)
 
         # Analisis waktu rekursif
-        mulai = time.time()
+        mulai_rekursif = time.perf_counter()
         cari_kamar_kosong_rekursif(data_dummy)
-        waktu_rekursif.append(time.time() - mulai)
+        waktu_rekursif.append(time.perf_counter() - mulai_rekursif)
 
-    # Plot hasil
     plt.figure(figsize=(10, 6))
-    plt.plot(ukuran_data, waktu_iteratif, label="Iteratif", marker="o")
-    plt.plot(ukuran_data, waktu_rekursif, label="Rekursif", marker="o")
+    plt.plot(ukuran_data, waktu_iteratif,
+             label="Iteratif", marker="o", color="blue")
+    plt.plot(ukuran_data, waktu_rekursif,
+             label="Rekursif", marker="o", color="red")
     plt.title("Analisis Efisiensi Algoritma")
-    plt.xlabel("Jumlah Data")
-    plt.ylabel("Waktu (detik)")
+    plt.xlabel("Jumlah Data (Ukuran Array)")
+    plt.ylabel("Waktu Eksekusi (detik)")
     plt.legend()
     plt.grid()
+    plt.tight_layout()
     plt.show()
 
 
 # Fungsi untuk menampilkan tabel kamar kosong
-
 
 def tampilkan_tabel_kamar(kamar_list, judul):
     tabel_kamar_window = tk.Toplevel(root)
